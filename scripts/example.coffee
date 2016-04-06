@@ -34,7 +34,6 @@ module.exports = (robot) ->
 
   robot.respond /gcal calendar (.*)/i, (msg)->
     console.log msg
-    console.log robot
     # in the brain, set the calendar name for that user to msg.match[1]
     calendarId   = msg.match[1]
     userId       = msg.envelope.user.id
