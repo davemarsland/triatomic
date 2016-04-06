@@ -68,13 +68,10 @@ module.exports = (robot) ->
 
   # return the calendar events for the immediate future
   robot.respond /gcal me/i, (msg)->
-    msg.reply "Starting"
     userId = "dave.marsland@just-eat.com"
     now = moment().toISOString()
-    msg.reply "Quite far"
     daysAhead = 1
     in24 = moment().add(daysAhead,'days').toISOString()
-    msg.reply "Very far"
     robot.emit "googleapi:request",
       service: "calendar"
       version: "v3"
@@ -85,11 +82,10 @@ module.exports = (robot) ->
         singleEvents: true
         calendarId: userId
       callback: (err, data)->
-        msg.reply "I'm in the callback"
         return msg.reply err if err
         msg.reply data.items
         message = ""
-        timeZone = gcal[userId].timeZone
+        timeZone = 'Europe/London'
         items = data.items.map((item)->
           if item.start.date
             start = item.start.date
@@ -101,16 +97,22 @@ module.exports = (robot) ->
             format = 'M/D h:mm'
 
           start = moment(start)
-          start = start.tz(timeZone || item.start.timeZone || 'America/New_York')
+          start = start.tz(timeZone || item.start.timeZone || 'Europe/London')
+
+          msg.reply start
 
           end = moment(end)
-          end = end.tz(timeZone || item.end.timeZone || 'America/New_York')
+          end = end.tz(timeZone || item.end.timeZone || 'Europe/London')
+
+          msg.reply end
 
           entry =  "[#{start.format(format)}-#{end.format(format)}]  #{item.summary}\n"
           # entry += "[#{start.toString()}-#{end.toString()}]\n"
           entry += "(#{item.location})\n" if item.location
           entry += "event   => #{item.htmlLink}\n"
           entry += "hangout => #{item.hangoutLink}\n" if item.hangoutLink
+
+          msg.reply entry
           entry
         ).join("\n")
         console.log items
