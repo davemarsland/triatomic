@@ -85,7 +85,7 @@ module.exports = (robot) ->
         singleEvents: true
         calendarId: userId
       callback: (err, data)->
-        msg.reploy "I'm in the callback"
+        msg.reply "I'm in the callback"
         return msg.reply err if err
         msg.reply data.items
         message = ""
