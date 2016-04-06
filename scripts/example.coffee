@@ -1,16 +1,13 @@
 module.exports = (robot) ->
 
   robot.respond /what rooms are available\?/i, (msg) ->
-    apiKey = 'MyAPIkey'
+    apiKey = 'AIzaSyBd3y9MQ3Ar-Dvf5dWpiM589YAWciS5KVI'
     url = "https://www.googleapis.com/calendar/v3/freeBusy?key=#{ apiKey }"
     d = new Date()
     now = d.toISOString()
     endOfDay = "#{ now.substr(0, 11) }23:59:59#{ now.substr(19) }"
 
-    roomCalendars = []
-
-    for alias, room of rooms
-      roomCalendars.push room.id
+    roomCalendars = ["just-eat.com_343436363431312d373030@resource.calendar.google.com"]
 
     post_data = JSON.stringify({
       'timeMin': now
