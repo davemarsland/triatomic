@@ -71,6 +71,7 @@ module.exports = (robot) ->
     userId = "dave.marsland@just-eat.com"
     now = moment().toISOString()
     hoursAhead = msg.match[1]
+    meetings = 0
     in24 = moment().add(hoursAhead,'hours').toISOString()
     robot.emit "googleapi:request",
       service: "calendar"
@@ -85,6 +86,7 @@ module.exports = (robot) ->
         return msg.reply err if err
         message = ""
         timeZone = 'Europe/London'
+        meetings = data.items.length
         items = data.items.map((item)->
           if item.start.date
             start = item.start.date
@@ -111,7 +113,7 @@ module.exports = (robot) ->
         ).join("\n")
         console.log items
         message += if items.length > 0
-                     "In the next #{hoursAhead} hours(s): \n#{items.length} meetings"
+                     "In the next #{hoursAhead} hour(s): \n#{meetings} meetings"
                    else
                      "Sorry, no scheduled events in next #{daysAhead} days."
         msg.reply message
