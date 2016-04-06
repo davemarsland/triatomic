@@ -74,6 +74,7 @@ module.exports = (robot) ->
     msg.reply "Quite far"
     daysAhead = 1
     in24 = moment().add(daysAhead,'days').toISOString()
+    msg.reply "Very far"
     robot.emit "googleapi:request",
       service: "calendar"
       version: "v3"
