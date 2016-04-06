@@ -67,10 +67,10 @@ module.exports = (robot) ->
     msg.reply "OK, your calendar, `gcal me` will reflect your timzone, #{timeZone}."
 
   # return the calendar events for the immediate future
-  robot.respond /gcal me/i, (msg)->
+  robot.respond /do I have any meetings in the next (.*) hours/i, (msg)->
     userId = "dave.marsland@just-eat.com"
     now = moment().toISOString()
-    hoursAhead = 1
+    hoursAhead = msg.match[1]
     in24 = moment().add(hoursAhead,'hours').toISOString()
     robot.emit "googleapi:request",
       service: "calendar"
@@ -83,7 +83,6 @@ module.exports = (robot) ->
         calendarId: userId
       callback: (err, data)->
         return msg.reply err if err
-        msg.reply data.items
         message = ""
         timeZone = 'Europe/London'
         items = data.items.map((item)->
@@ -99,12 +98,8 @@ module.exports = (robot) ->
           start = moment(start)
           start = start.tz(timeZone || item.start.timeZone || 'Europe/London')
 
-          msg.reply start
-
           end = moment(end)
           end = end.tz(timeZone || item.end.timeZone || 'Europe/London')
-
-          msg.reply end
 
           entry =  "[#{start.format(format)}-#{end.format(format)}]  #{item.summary}\n"
           # entry += "[#{start.toString()}-#{end.toString()}]\n"
@@ -112,12 +107,11 @@ module.exports = (robot) ->
           entry += "event   => #{item.htmlLink}\n"
           entry += "hangout => #{item.hangoutLink}\n" if item.hangoutLink
 
-          msg.reply entry
           entry
         ).join("\n")
         console.log items
         message += if items.length > 0
-                     "In the next #{daysAhead} day(s): \n#{items}"
+                     "In the next #{hoursAhead} hours(s): \n#{items.length} meetings"
                    else
                      "Sorry, no scheduled events in next #{daysAhead} days."
         msg.reply message
