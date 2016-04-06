@@ -70,8 +70,8 @@ module.exports = (robot) ->
   robot.respond /gcal me/i, (msg)->
     userId = "dave.marsland@just-eat.com"
     now = moment().toISOString()
-    daysAhead = 1
-    in24 = moment().add(daysAhead,'days').toISOString()
+    hoursAhead = 1
+    in24 = moment().add(hoursAhead,'hours').toISOString()
     robot.emit "googleapi:request",
       service: "calendar"
       version: "v3"
