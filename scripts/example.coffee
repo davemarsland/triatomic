@@ -32,43 +32,14 @@ module.exports = (robot) ->
   moment = require('moment')
   require('moment-timezone')
 
-  robot.respond /gcal calendar (.*)/i, (msg)->
-    console.log msg
-    # in the brain, set the calendar name for that user to msg.match[1]
-    calendarId   = msg.match[1]
-    userId       = msg.envelope.user.id
-    gcal         = robot.brain.get('gcal') || {}
-    gcal[userId] =
-      id: userId
-      calendarId: calendarId
+  userid = "dave.marsland@just-eat.com"
 
-    robot.brain.set 'gcal', gcal
-    msg.reply "OK, set your calendar to #{calendarId}"
-
-  robot.respond /gcal look (.*) day?s ahead/, (msg)->
-    daysAhead       = msg.match[1]
-    userId          = msg.envelope.user.id
-    gcal            = robot.brain.get('gcal') || {}
-    gcal[userId]    = gcal[userId] || {}
-
-    gcal[userId].id        = userId
-    gcal[userId].daysAhead = daysAhead
-    msg.reply "OK, your calendar, `gcal me` will show the next #{daysAhead} days."
-
-  # make every effort to return the correct timezone - http://momentjs.com/timezone/
-  robot.respond /gcal timezone (.*)/, (msg)->
-    timeZone     = msg.match[1]
-    userId       = msg.envelope.user.id
-    gcal         = robot.brain.get('gcal') || {}
-    gcal[userId] = gcal[userId] || {}
-
-    gcal[userId].id       = userId
-    gcal[userId].timeZone = timeZone
-    msg.reply "OK, your calendar, `gcal me` will reflect your timzone, #{timeZone}."
+  robot.respond /set calendar (.*)/i, (msg)->
+    userId = msg.match[1]
+    msg.reply "OK, set your calendar to #{userId}"
 
   # return the calendar events for the immediate future
   robot.respond /do I have any meetings in the next (.*) hours/i, (msg)->
-    userId = "dave.marsland@just-eat.com"
     now = moment().toISOString()
     hoursAhead = msg.match[1]
     meetings = 0
