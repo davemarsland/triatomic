@@ -70,12 +70,9 @@ module.exports = (robot) ->
   robot.respond /gcal me/i, (msg)->
     msg.reply "Starting"
     userId = "dave.marsland@just-eat.com"
-    gcal = robot.brain.get('gcal')
-    unless gcal[userId]
-      msg.reply "You need to set your calendar with my.email@example.com first"
     now = moment().toISOString()
     msg.reply "Quite far"
-    daysAhead = gcal[userId].daysAhead || 1
+    daysAhead = 1
     in24 = moment().add(daysAhead,'days').toISOString()
     robot.emit "googleapi:request",
       service: "calendar"
@@ -85,7 +82,7 @@ module.exports = (robot) ->
         timeMin: now
         timeMax: in24
         singleEvents: true
-        calendarId: gcal[userId].calendarId
+        calendarId: userId
       callback: (err, data)->
         return console.log(err) if err
         console.log data.items
