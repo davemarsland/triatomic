@@ -32,7 +32,7 @@ module.exports = (robot) ->
   moment = require('moment')
   require('moment-timezone')
 
-  userid = "dave.marsland@just-eat.com"
+  userId = "dave.marsland@just-eat.com"
 
   robot.respond /set calendar (.*)/i, (msg)->
     userId = msg.match[1]
