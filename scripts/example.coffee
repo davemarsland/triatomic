@@ -84,8 +84,8 @@ module.exports = (robot) ->
         singleEvents: true
         calendarId: userId
       callback: (err, data)->
-        return console.log(err) if err
-        console.log data.items
+        return msg.reply err if err
+        msg.reply data.items
         message = ""
         timeZone = gcal[userId].timeZone
         items = data.items.map((item)->
