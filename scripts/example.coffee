@@ -15,6 +15,8 @@ module.exports = (robot) ->
       items: roomCalendars
     })
 
+    msg.send post_data
+
     msg.http(url)
       .post(post_data) (err, res, body) ->
           if err or res.statusCode isnt 200
