@@ -43,7 +43,7 @@ module.exports = (robot) ->
       calendarId: calendarId
 
     robot.brain.set 'gcal', gcal
-    robot.reply "OK, set your calendar to #{calendarId}"
+    msg.reply "OK, set your calendar to #{calendarId}"
 
   robot.respond /gcal look (.*) day?s ahead/, (msg)->
     daysAhead       = msg.match[1]
@@ -68,11 +68,13 @@ module.exports = (robot) ->
 
   # return the calendar events for the immediate future
   robot.respond /gcal me/i, (msg)->
-    userId = msg.envelope.user.id
+    msg.reply "Starting"
+    userId = "dave.marsland@just-eat.com"
     gcal = robot.brain.get('gcal')
     unless gcal[userId]
       msg.reply "You need to set your calendar with my.email@example.com first"
     now = moment().toISOString()
+    msg.reply "Quite far"
     daysAhead = gcal[userId].daysAhead || 1
     in24 = moment().add(daysAhead,'days').toISOString()
     robot.emit "googleapi:request",
