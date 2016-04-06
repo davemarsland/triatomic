@@ -113,7 +113,7 @@ module.exports = (robot) ->
         ).join("\n")
         console.log items
         message += if items.length > 0
-                     "In the next #{hoursAhead} hour(s): \n#{meetings} meetings"
+                     "In the next #{hoursAhead} hour(s): #{meetings} meetings"
                    else
-                     "Sorry, no scheduled events in next #{daysAhead} days."
-        msg.reply message
+                     "Nope, you are free, go to the pub."
+        msg.send message
