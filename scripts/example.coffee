@@ -19,5 +19,5 @@ module.exports = (robot) ->
       .post(post_data) (err, res, body) ->
           if err or res.statusCode isnt 200
               msg.send 'I\'ve encountered an error trying to get an available room. Sorry!'
+              msg.send body
               return
-            msg.send 'Here'
