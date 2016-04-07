@@ -58,6 +58,34 @@ module.exports = (robot) ->
         message = ""
         timeZone = 'Europe/London'
         meetings = data.items.length
+        items = data.items
+        console.log items
+        message += if items.length > 0
+                     "In the next #{hoursAhead} hour(s): #{meetings} meetings"
+                   else
+                     "Nope, you are free, go to the pub."
+        msg.send message
+
+  # return the calendar events for the immediate future
+  robot.respond /what meetings do I have in the next (.*) hours/i, (msg)->
+    now = moment().toISOString()
+    hoursAhead = msg.match[1]
+    meetings = 0
+    in24 = moment().add(hoursAhead,'hours').toISOString()
+    robot.emit "googleapi:request",
+      service: "calendar"
+      version: "v3"
+      endpoint: "events.list"
+      params:
+        timeMin: now
+        timeMax: in24
+        singleEvents: true
+        calendarId: userId
+      callback: (err, data)->
+        return msg.reply err if err
+        message = ""
+        timeZone = 'Europe/London'
+        meetings = data.items.length
         items = data.items.map((item)->
           if item.start.date
             start = item.start.date
@@ -84,7 +112,7 @@ module.exports = (robot) ->
         ).join("\n")
         console.log items
         message += if items.length > 0
-                     "In the next #{hoursAhead} hour(s): #{meetings} meetings"
+                     "Meetings in the next #{hoursAhead} hour(s): #{items}"
                    else
                      "Nope, you are free, go to the pub."
         msg.send message
