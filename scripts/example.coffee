@@ -125,6 +125,7 @@ module.exports = (robot) ->
     meetings = 0
     in24 = moment().add(hoursAhead,'hours').toISOString()
     for room in FPHmeetingrooms
+      msg.send room
       robot.emit "googleapi:request",
         service: "calendar"
         version: "v3"
