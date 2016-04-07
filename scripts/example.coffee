@@ -33,7 +33,7 @@ module.exports = (robot) ->
   require('moment-timezone')
 
   userId = "dave.marsland@just-eat.com"
-  FPHmeetingrooms = ["just-eat.com_2d373139323835392d373237@resource.calendar.google.com", "Calendar ID: just-eat.com_3937353431303039313731@resource.calendar.google.com"]
+  FPHmeetingrooms = ["just-eat.com_2d373139323835392d373237@resource.calendar.google.com", "just-eat.com_3937353431303039313731@resource.calendar.google.com"]
 
   robot.respond /set calendar (.*)/i, (msg)->
     userId = msg.match[1]
@@ -121,9 +121,8 @@ module.exports = (robot) ->
   # return the calendar events for the immediate future
   robot.respond /do Which meeting rooms are free/i, (msg)->
     now = moment().toISOString()
-    hoursAhead = msg.match[1]
-    meetings = 0
-    in24 = moment().add(hoursAhead,'hours').toISOString()
+    in30 = moment().add(30,'minutes').toISOString()
+    freerooms = ""
     for room in FPHmeetingrooms
       msg.send room
       robot.emit "googleapi:request",
@@ -132,7 +131,7 @@ module.exports = (robot) ->
         endpoint: "events.list"
         params:
           timeMin: now
-          timeMax: in24
+          timeMax: in30
           singleEvents: true
           calendarId: room
         callback: (err, data)->
@@ -142,8 +141,7 @@ module.exports = (robot) ->
           meetings = data.items.length
           items = data.items
           console.log items
-          message += if items.length > 0
-                       "Nope, they are all full"
-                     else
-                       "Yes, go go go"
-          msg.send message
+          if items.length == 0
+            freerooms += room
+          
+    msg.send freerooms
