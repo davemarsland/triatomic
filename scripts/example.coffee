@@ -143,5 +143,8 @@ module.exports = (robot) ->
           console.log items
           if items.length == 0
             freerooms += room
-          
-    msg.send freerooms
+    
+    if freerooms.length == 0
+      msg.send "No rooms..."  
+    else
+      msg.send freerooms
