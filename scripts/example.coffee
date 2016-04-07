@@ -138,11 +138,10 @@ module.exports = (robot) ->
           return msg.reply err if err
           message = ""
           timeZone = 'Europe/London'
-          msg.send data.items
           meetings = data.items.length
           items = data.items
           console.log items
-          if items? && items.length == 0
+          if items.length == 0
             freerooms += room
     
     if freerooms.length == 0
