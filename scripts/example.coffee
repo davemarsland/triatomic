@@ -33,6 +33,7 @@ module.exports = (robot) ->
   require('moment-timezone')
 
   userId = "dave.marsland@just-eat.com"
+  FPHmeetingrooms = ["just-eat.com_2d373139323835392d373237@resource.calendar.google.com", "Calendar ID: just-eat.com_3937353431303039313731@resource.calendar.google.com"]
 
   robot.respond /set calendar (.*)/i, (msg)->
     userId = msg.match[1]
@@ -116,3 +117,32 @@ module.exports = (robot) ->
                    else
                      "Nope, you are free, go to the pub."
         msg.send message
+
+  # return the calendar events for the immediate future
+  robot.respond /do Which meeting rooms are free/i, (msg)->
+    now = moment().toISOString()
+    hoursAhead = msg.match[1]
+    meetings = 0
+    in24 = moment().add(hoursAhead,'hours').toISOString()
+    for room in FPHmeetingrooms
+      robot.emit "googleapi:request",
+        service: "calendar"
+        version: "v3"
+        endpoint: "events.list"
+        params:
+          timeMin: now
+          timeMax: in24
+          singleEvents: true
+          calendarId: room
+        callback: (err, data)->
+          return msg.reply err if err
+          message = ""
+          timeZone = 'Europe/London'
+          meetings = data.items.length
+          items = data.items
+          console.log items
+          message += if items.length > 0
+                       "Nope, they are all full"
+                     else
+                       "Yes, go go go"
+          msg.send message
