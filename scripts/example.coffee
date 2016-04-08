@@ -137,9 +137,8 @@ module.exports = (robot) ->
         callback: (err, data)->
           return msg.reply err if err
           timeZone = 'Europe/London'
-          console.log data
+          console.log room + " " + data
           items = data.items
-          console.log items[0].summary
           msg.send items.length.toString()
           if typeof items == "undefined" || items == null
             msg.send room
