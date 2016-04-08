@@ -123,6 +123,8 @@ module.exports = (robot) ->
     now = moment().toISOString()
     in30 = moment().add(30,'minutes').toISOString()
     freerooms = ""
+    roomstoprocess = FPHmeetingrooms.length
+    processedrooms = 0
     for room in FPHmeetingrooms
       msg.send room
       robot.emit "googleapi:request",
@@ -144,8 +146,11 @@ module.exports = (robot) ->
           if (typeof items == "undefined" || items == null) || items.length.toString() == "0"
             msg.send room
             freerooms += room
+          processedrooms = processedrooms + 1
     
-    sleep(5000)
+    while roomstoprocess !== processedrooms
+      go = false
+
     if freerooms.length == 0
       msg.send "No rooms..."  
     else
