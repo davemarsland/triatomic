@@ -146,18 +146,12 @@ module.exports = (robot) ->
           if (typeof items == "undefined" || items == null) || items.length.toString() == "0"
             msg.send room
             freerooms += room
-          processedrooms = processedrooms + 1
+          processedrooms++
     
     while roomstoprocess !== processedrooms
-      go = false
+      go = 1
 
     if freerooms.length == 0
       msg.send "No rooms..."  
     else
       msg.send freerooms + ", go go go"
-
-
-
-sleep = (ms) ->
-  start = new Date().getTime()
-  continue while new Date().getTime() - start < ms
