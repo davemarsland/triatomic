@@ -149,9 +149,15 @@ module.exports = (robot) ->
           processedrooms++
     
     while roomstoprocess !== processedrooms
-      go = 1
+      sleep(500)
 
     if freerooms.length == 0
       msg.send "No rooms..."  
     else
       msg.send freerooms + ", go go go"
+
+
+
+sleep = (ms) ->
+  start = new Date().getTime()
+  continue while new Date().getTime() - start < ms
