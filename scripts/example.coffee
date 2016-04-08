@@ -144,7 +144,14 @@ module.exports = (robot) ->
             msg.send room
             freerooms += room
     
+    sleep(5000)
     if freerooms.length == 0
       msg.send "No rooms..."  
     else
       msg.send freerooms + ", go go go"
+
+
+
+sleep = (ms) ->
+  start = new Date().getTime()
+  continue while new Date().getTime() - start < ms
