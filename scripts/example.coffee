@@ -33,7 +33,7 @@ module.exports = (robot) ->
   require('moment-timezone')
 
   userId = "dave.marsland@just-eat.com"
-  FPHmeetingrooms = ["just-eat.com_2d373139323835392d373237@resource.calendar.google.com", "just-eat.com_3937353431303039313731@resource.calendar.google.com","just-eat.com_34363032303933312d393832@resource.calendar.google.com","just-eat.com_383739393330322d353938@resource.calendar.google.com"]
+  FPHmeetingrooms = ["just-eat.com_2d373139323835392d373237@resource.calendar.google.com", "just-eat.com_3937353431303039313731@resource.calendar.google.com","just-eat.com_34363032303933312d393832@resource.calendar.google.com","just-eat.com_383739393330322d353938@resource.calendar.google.com","dave.marsland@just-eat.com"]
 
   robot.respond /set calendar (.*)/i, (msg)->
     userId = msg.match[1]
