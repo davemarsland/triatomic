@@ -139,8 +139,8 @@ module.exports = (robot) ->
           timeZone = 'Europe/London'
           meetings = data.items.length
           items = data.items
-          console.log items
-          msg.send items.length
+          console.log items[0].summary
+          msg.send items.length.toString()
           if items.length == 0
             freerooms += room
     
