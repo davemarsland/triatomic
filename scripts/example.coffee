@@ -123,7 +123,6 @@ module.exports = (robot) ->
     now = moment().toISOString()
     in30 = moment().add(30,'minutes').toISOString()
     freerooms = ""
-    roomstoprocess = FPHmeetingrooms.length
     processedrooms = 0
     for room in FPHmeetingrooms
       msg.send room
@@ -148,7 +147,7 @@ module.exports = (robot) ->
             freerooms += room
           processedrooms++
     
-    while roomstoprocess !== processedrooms
+    while processedrooms !== FPHmeetingrooms.length
       sleep(500)
 
     if freerooms.length == 0
