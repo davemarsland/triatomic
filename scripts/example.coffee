@@ -137,10 +137,10 @@ module.exports = (robot) ->
         callback: (err, data)->
           return msg.reply err if err
           timeZone = 'Europe/London'
-          msg.send data
           meetings = data.items.length
           items = data.items
           console.log items
+          msg.send items.length
           if items.length == 0
             freerooms += room
     
