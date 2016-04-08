@@ -141,7 +141,8 @@ module.exports = (robot) ->
           items = data.items
           console.log items[0].summary
           msg.send items.length.toString()
-          if items.length == 0
+          if typeof items === "undefined" || items === null;
+            msg.send room
             freerooms += room
     
     if freerooms.length == 0
