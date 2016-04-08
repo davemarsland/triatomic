@@ -136,8 +136,8 @@ module.exports = (robot) ->
           calendarId: room
         callback: (err, data)->
           return msg.reply err if err
-          message = ""
           timeZone = 'Europe/London'
+          msg.send data
           meetings = data.items.length
           items = data.items
           console.log items
