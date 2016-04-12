@@ -149,9 +149,10 @@ module.exports = (robot) ->
     while true
       msg.send "processed rooms " + processedrooms
       processedrooms "room count " + FPHmeetingrooms.length
-      sleep(500)
+      sleep(1000)
       break unless processedrooms == FPHmeetingrooms.length
 
+    msg.send "free rooms " + freerooms.length
     if freerooms.length == 0
       msg.send "No rooms..."  
     else
