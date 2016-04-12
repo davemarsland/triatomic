@@ -145,7 +145,7 @@ module.exports = (robot) ->
             freerooms += room
           processedrooms = processedrooms + 1
     
-    sleep(1000) while processedrooms !== FPHmeetingrooms.length
+    sleep(1000) while processedrooms != FPHmeetingrooms.length
 
 
     msg.send "free rooms " + freerooms.length
