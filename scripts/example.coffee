@@ -138,7 +138,6 @@ module.exports = (robot) ->
         callback: (err, data)->
           return msg.reply err if err
           timeZone = 'Europe/London'
-          console.log data
           items = data.items
           msg.send items.length.toString()
           if ((typeof items == "undefined" || items == null) || items.length.toString() == "0")
@@ -147,8 +146,8 @@ module.exports = (robot) ->
           processedrooms = processedrooms + 1
     
     while true
-      msg.send "processed rooms " + processedrooms
-      processedrooms "room count " + FPHmeetingrooms.length
+      console.log "processed rooms " + processedrooms
+      console.log "room count " + FPHmeetingrooms.length
       sleep(1000)
       break unless processedrooms == FPHmeetingrooms.length
 
