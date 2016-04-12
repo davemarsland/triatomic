@@ -145,11 +145,8 @@ module.exports = (robot) ->
             freerooms += room
           processedrooms = processedrooms + 1
     
-    while true
-      console.log "processed rooms " + processedrooms
-      console.log "room count " + FPHmeetingrooms.length
-      sleep(1000)
-      break unless processedrooms == FPHmeetingrooms.length
+    sleep(1000) while processedrooms !== FPHmeetingrooms.length
+
 
     msg.send "free rooms " + freerooms.length
     if freerooms.length == 0
