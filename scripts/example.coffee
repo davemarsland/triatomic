@@ -142,16 +142,10 @@ module.exports = (robot) ->
           items = data.items
           msg.send items.length.toString()
           msg.send items
-
-    
-    while processedrooms !== FPHmeetingrooms.length
-      sleep(500)
-
-    if freerooms.length == 0
-      msg.send "No rooms..."  
-    else
-      msg.send freerooms + ", go go go"
-
+          if ((typeof items == "undefined" || items == null) || items.length.toString() == "0"
+            msg.send room
+            freerooms += room
+          processedrooms = processedrooms + 1
 
 
 sleep = (ms) ->
