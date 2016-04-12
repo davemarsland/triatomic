@@ -146,6 +146,16 @@ module.exports = (robot) ->
             msg.send room
             freerooms += room
           processedrooms = processedrooms + 1
+    
+    while true
+      sleep(500)
+      break unless processedrooms == FPHmeetingrooms.length
+
+    if freerooms.length == 0
+      msg.send "No rooms..."  
+    else
+      msg.send freerooms + ", go go go"
+
 
 
 sleep = (ms) ->
